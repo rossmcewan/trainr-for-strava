@@ -1,0 +1,12 @@
+<ion-view title="Welcome">
+	<ion-content>
+		<div class="list">
+			<a class="item item-avatar" href="#">
+				<img src="{{user.athlete.profile_medium}}">
+				<h2>{{user.athlete.firstname}} {{user.athlete.lastname}}</h2>
+				<p>{{user.athlete.city}}, {{user.athlete.state}}</p>
+			</a>
+		</div>
+		{{user.athlete}}
+	</ion-content>
+</ion-view>
