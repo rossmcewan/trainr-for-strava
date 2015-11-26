@@ -1,8 +1,8 @@
-<ion-view title="{{title}}" cache-view="false">
+<ion-view title="{{title}}">
   <ion-pane>
     <ion-tabs class="tabs-striped tabs-color-calm">
 
-      <ion-tab title="Program">
+      <ion-tab title="Program" on-select="setTitle('Program')">
         <ion-view>
           <ion-content>
             <div class="list">
@@ -16,34 +16,47 @@
         </ion-view>
       </ion-tab>
 
-      <ion-tab title="Feed" se>
+      <ion-tab title="Feed" on-select="setTitle('Feed')">
         <ion-view>
           <ion-content>
-            <div class="list">
-              <a class="item item-avatar" href="#">
+            <div class="list" ng-repeat="run in model.runs">
+              <a class="item item-avatar" ui-sref="app.activity">
                 <img src="{{user.athlete.profile_medium}}">
-                <h2>{{user.athlete.firstname}} {{user.athlete.lastname}}</h2>
-                <p>{{user.athlete.city}}, {{user.athlete.state}}</p>
+                <h2>{{run.activity.name}}</h2>
+                <p><small>{{run.formattedStartDate}}</small></p>
+                <p><small>{{(run.activity.distance/1000).toFixed(2)}}km&nbsp;&nbsp;&nbsp;&nbsp;{{run.activity.total_elevation_gain}}m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="ion-trophy">&nbsp;{{run.activity.kudos_count}}</i></small></p>
+                <ng-map class="run-map" zoom="{{run.map.zoom}}" center="[{{run.map.center.latitude}}, {{run.map.center.longitude}}]" scale-control="false"
+                map-type-control="false" zoom-control="false" street-view-control="false" pan-control="false" default-style="false">
+                  <shape name="polyline" id="foo" path="{{run.map.polyline}}" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="3"></shape>
+                </ng-map>
               </a>
-            </div>
-            <div class="card" ng-repeat="activity in activities">
-              {{activity}}
+              <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                  <i class="icon ion-thumbsup"></i> Like
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-chatbox"></i> Comment
+                </a>
+                <a class="tab-item" href="#">
+                  <i class="icon ion-android-share-alt"></i> Share
+                </a>
+              </div>
             </div>
           </ion-content>
         </ion-view>
       </ion-tab>
 
-      <ion-tab title="Calendar">
+      <ion-tab title="Calendar" on-select="setTitle('Calendar')">
         <ion-view>
           <ion-content>
             <div class="list">
-              <a class="item item-avatar" href="#">
-                <img src="{{user.athlete.profile_medium}}">
+              <a class="item item-avatar " href="# ">
+                <img src="{{user.athlete.profile_medium}} ">
                 <h2>{{user.athlete.firstname}} {{user.athlete.lastname}}</h2>
                 <p>{{user.athlete.city}}, {{user.athlete.state}}</p>
               </a>
             </div>
-            <calendar calendar-mode="model.mode" event-source="model.runs"></calendar>
+            <calendar calendar-mode="model.mode " event-source="model.runs " data-tap-disabled="true "></calendar>
           </ion-content>
         </ion-view>
       </ion-tab>

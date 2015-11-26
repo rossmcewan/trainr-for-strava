@@ -20,3 +20,10 @@
     background-color: #fc4c02;
     color: white;
 }
+
+/* for google maps */
+.run-map {
+    display:block; 
+    height:120px;
+    width:100%;
+}
