@@ -7,7 +7,11 @@
   "dependencies": {
     "ng-cordova-oauth": "~0.1.4",
     "ionic-material": "~0.4.2",
-    "robotodraft": "~1.1.0"
+    "robotodraft": "~1.1.0",
+    "moment": "~2.10.6",
+    "async": "~1.5.0",
+    "lodash": "~3.10.1",
+    "angular-ui-calendar": "~1.0.1"
   },
   "resolutions": {
     "ionic": "1.1.1",

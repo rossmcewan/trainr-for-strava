@@ -1,1 +1,22 @@
 /* Empty. Add your own CSS if you like */
+
+/* override ionic-calendar */
+.event-detail-container {
+    border-top: 2px #fc4c02 solid;
+    margin-top: 355px;
+}
+
+.calendar-event-inner {
+    overflow: hidden;
+    background-color: #fc4c02;
+    color: white;
+    height: 100%;
+    width: 100%;
+    padding: 2px;
+    line-height: 15px;
+}
+
+.monthview-primary-with-event {
+    background-color: #fc4c02;
+    color: white;
+}
