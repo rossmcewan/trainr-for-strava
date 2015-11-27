@@ -22,8 +22,22 @@
 }
 
 /* for google maps */
-.run-map {
+.run-map-feed {
     display:block; 
-    height:120px;
+    height:150px;
     width:100%;
+    margin-top:-15px;
+}
+
+.run-map-activity {
+    display:block; 
+    height:200px;
+    width:100%;
+    margin-top:-40px;
+}
+
+.map-button {
+    margin-top: -17%;
+    margin-left: 85%;
+    z-index:10;
 }

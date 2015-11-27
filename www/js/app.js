@@ -48,7 +48,8 @@ angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', '
           controller: 'ActivityController',
           templateUrl:'templates/activity.html'
         }
-      }
+      },
+      params:{activity:null}
     });
     $urlRouterProvider.otherwise('/connect');
   })

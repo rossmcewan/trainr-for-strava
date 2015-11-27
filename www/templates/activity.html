@@ -1,5 +1,82 @@
-<ion-view title="Activity" cache-view="false">
+<ion-view cache-view="false">
 	<ion-pane>
-		
+		<ion-tabs class="tabs-striped tabs-color-calm tabs-icon-left">
+			<ion-tab icon="ion-ios-list">
+				<ion-view>
+					<ion-content>
+						<div class="list">
+							<a class="item item-avatar" href="#">
+								<img src="{{user.athlete.profile_medium}}">
+								<h2>{{activity.title}}</h2>
+								<p><small>{{activity.humanizedAgo}} ago</small></p>
+							</a>
+							<div class="item">
+								<ng-map class="run-map-activity" zoom="{{activity.map.zoom}}" center="[{{activity.map.center.latitude}}, {{activity.map.center.longitude}}]"
+								scrollwheel="false" disable-default-u-i="true">
+									<shape name="polyline" id="foo" path="{{activity.map.polyline}}" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"></shape>
+									<a class="button button-clear button-small button-icon button-calm map-button icon ion-thumbsup"></a>
+								</ng-map>
+							</div>
+							<div class="item row">
+								<div class="col text-center">
+									<h2>{{activity.formattedMovingTime}}</h2>
+									<p><small>MOVING TIME</small></p>
+								</div>
+								<div class="col text-center">
+									<h2>{{activity.formattedDistance}}</h2>
+									<p><small>DISTANCE</small></p>
+								</div>
+							</div>
+							<div class="item row">
+								<div class="col text-center">
+									<h2>{{activity.formattedAveragePace}}</h2>
+									<p><small>AVERAGE PACE</small></p>
+								</div>
+								<div class="col text-center">
+									<h2>{{activity.activity.total_elevation_gain}}</h2>
+									<p><small>ELEVATION GAIN</small></p>
+								</div>
+								<div class="col text-center">
+									<h2>{{activity.activity.calories||'0'}}</h2>
+									<p><small>CALORIES</small></p>
+								</div>
+							</div>
+						</div>
+						<!--{{activity}}-->
+					</ion-content>
+				</ion-view>
+			</ion-tab>
+			<ion-tab icon="ion-trophy">
+				<ion-view>
+					<ion-content>
+						<div class="list">
+							<a class="item item-icon-left" ng-repeat="segment in fullActivity.segment_efforts">
+								<i class="icon ion-trophy" ng-show="segment.inTop10"></i>
+								<h2>{{segment.name}}</h2>
+								<p><small>{{segment.formattedDistance}} - {{segment.formattedElapsedTime}} - {{segment.formattedPace}}</small></p>
+							</a>
+						</div>
+					</ion-content>
+				</ion-view>
+			</ion-tab>
+			<ion-tab icon="ion-ios-pulse">
+				<ion-view>
+					<ion-content>
+					</ion-content>
+				</ion-view>
+			</ion-tab>
+			<ion-tab icon="ion-heart">
+				<ion-view>
+					<ion-content>
+					</ion-content>
+				</ion-view>
+			</ion-tab>
+			<ion-tab icon="ion-connection-bars">
+				<ion-view>
+					<ion-content>
+					</ion-content>
+				</ion-view>
+			</ion-tab>
+		</ion-tabs>
 	</ion-pane>
 </ion-view>

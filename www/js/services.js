@@ -12,6 +12,9 @@ services.factory('StravaService', function ($q, $http, $cordovaOauth, StravaSett
 		},
 		getActivities: function () {
 			return $http.jsonp('https://www.strava.com/api/v3/athlete/activities?callback=JSON_CALLBACK&access_token=' + StravaUser.accessToken);
+		},
+		getActivity: function(id) {
+			return $http.jsonp('https://www.strava.com/api/v3/activities/'+id+'?callback=JSON_CALLBACK&access_token=' + StravaUser.accessToken);
 		}
     }
 });

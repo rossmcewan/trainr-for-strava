@@ -18,11 +18,24 @@ controllers.controller('WelcomeController', function ($scope, $state, StravaServ
 	$scope.user = StravaUser;
 });
 
-controllers.controller('ActivityController', function(){
-	
+controllers.controller('ActivityController', function($scope, $state, $stateParams, StravaService, StravaUser){
+	$scope.user = StravaUser;
+	$scope.activity = $stateParams.activity;
+	StravaService.getActivity($scope.activity.activity.id).success(function(result){
+		$scope.fullActivity = result;
+		$scope.fullActivity.segment_efforts.forEach(function(segment){
+			segment.formattedDistance = (segment.distance/1000).toFixed(2)+' km';
+			segment.formattedElapsedTime = moment.utc(segment.elapsed_time*1000).format('HH:mm:ss');
+			segment.formattedPace = moment.utc((16.666667/(segment.distance/segment.elapsed_time))*60*1000).format('mm:ss')+' /km';
+			segment.inTop10 = segment.kom_rank && segment.kom_rank < 11;
+		});
+	});
 });
 
-controllers.controller('MainController', function ($scope, $timeout, $state, $ionicTabsDelegate, StravaService, StravaUser) {
+controllers.controller('MainController', function ($scope, $timeout, $state, $ionicTabsDelegate, StravaService, StravaUser, NgMap) {
+	NgMap.getMap().then(function(map) {
+		console.log(map);
+	});
 	$scope.user = StravaUser;
 	$scope.title = 'Feed';
 	$timeout(function () { 
@@ -63,7 +76,11 @@ controllers.controller('MainController', function ($scope, $timeout, $state, $io
 				startTime:new Date(item.start_date_local),
 				endTime:moment(item.start_date_local).add(item.elapsed_time, 'seconds').toDate(),
 				activity:item,
+				humanizedAgo:moment.duration(moment().diff(item.start_date_local)).humanize(),
 				formattedStartDate:moment(item.start_date_local).format('HH:mm:ss on ddd, MMMM DD, YYYY'),
+				formattedMovingTime:moment.utc(item.moving_time*1000).format('HH:mm:ss'),
+				formattedDistance:(item.distance/1000).toFixed(2)+' km',
+				formattedAveragePace:moment.utc((16.666667/item.average_speed)*60*1000).format('mm:ss')+' /km',
 				map:{
 					center: {
 						latitude:item.start_latlng[0],
