@@ -41,3 +41,21 @@
     margin-left: 85%;
     z-index:10;
 }
+
+/* other */
+.header-label {
+    padding-left:10px;
+    margin-top:-10px;
+}
+
+.header-chart {
+    margin-top:-10px;
+}
+
+.feed-subheader {
+    height: 65px;
+}
+
+.below-feed-subheader {
+    margin-top:17px;
+}

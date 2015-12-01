@@ -32,10 +32,60 @@ controllers.controller('ActivityController', function($scope, $state, $statePara
 	});
 });
 
-controllers.controller('MainController', function ($scope, $timeout, $state, $ionicTabsDelegate, StravaService, StravaUser, NgMap) {
-	NgMap.getMap().then(function(map) {
-		console.log(map);
-	});
+controllers.controller('MainController', function ($scope, $interval, $state, $timeout, $ionicTabsDelegate, StravaService, StravaUser, NgMap) {
+	$scope.chart = {};
+	$scope.options = {
+		chart: {
+			type: 'discreteBarChart',
+			height: 50,
+			width:100,
+			margin : {
+				top: 0,
+				right: 0,
+				bottom: 0,
+				left: 10
+			},
+			color:function(d,i){
+				return 'green';	
+			},
+			refreshDataOnly:true,
+			deepWatchData:true,
+			x: function(d){ return d.label; },
+			y: function(d){ return getDayDistance(d.label); },
+			showValues: true,
+			// valueFormat: function(d){
+			// 	return d3.format(',.4f')(d);
+			// },
+			transitionDuration: 500,
+			showXAxis:false,
+			showYAxis:false,
+			showValues:false
+		}
+	};
+	$scope.data = [{
+		key: "This weeks distance",
+		values: [
+			{ "label" : "Mon" , "value" : 0 },
+			{ "label" : "Tue" , "value" : 0 },
+			{ "label" : "Wed" , "value" : 0 },
+			{ "label" : "Thu" , "value" : 0 },
+			{ "label" : "Fri" , "value" : 0 },
+			{ "label" : "Sat" , "value" : 0 },
+			{ "label" : "Sun" , "value" : 0 },
+		]
+	}];
+	function getDayDistance(day){
+		return $scope.distances[day];
+	}
+	$scope.distances = {
+		'Mon':0,
+		'Tue':0,
+		'Wed':0,
+		'Thu':0,
+		'Fri':0,
+		'Sat':0,
+		'Sun':0
+	}
 	$scope.user = StravaUser;
 	$scope.title = 'Feed';
 	$timeout(function () { 
@@ -92,6 +142,18 @@ controllers.controller('MainController', function ($scope, $timeout, $state, $io
 			}
 			$scope.model.runs.push(x);
 		});
-		// $scope.model.runs = runs;
+		//first need to find the dates of each day
+		var dayIndex = 1;
+		var byDay = _.groupBy($scope.model.runs, function(item){
+			return moment(item.activity.start_date_local).startOf('day').toDate().toString()
+		})
+		for(var prop in $scope.distances){
+			var date = moment().day(dayIndex++).startOf('day').toDate().toString();
+			var total = _.sum(byDay[date], function(item){
+				return item.activity.distance;
+			});
+			$scope.distances[prop] = total/1000;
+		}
+		$scope.chart.api.refresh();
 	});
 });
