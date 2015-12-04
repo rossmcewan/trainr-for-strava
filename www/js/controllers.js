@@ -147,13 +147,17 @@ controllers.controller('MainController', function ($scope, $interval, $state, $t
 		var byDay = _.groupBy($scope.model.runs, function(item){
 			return moment(item.activity.start_date_local).startOf('day').toDate().toString()
 		})
+		var totalDistance = 0;
 		for(var prop in $scope.distances){
 			var date = moment().day(dayIndex++).startOf('day').toDate().toString();
 			var total = _.sum(byDay[date], function(item){
 				return item.activity.distance;
 			});
 			$scope.distances[prop] = total/1000;
+			totalDistance += (total/1000);
 		}
+		$scope.distanceThisWeek = totalDistance.toFixed(1);
+		$scope.plannedDistanceThisWeek = 90;
 		$scope.chart.api.refresh();
 	});
 });

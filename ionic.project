@@ -1,6 +1,6 @@
 {
   "name": "trainr-for-strava",
-  "app_id": "",
+  "app_id": "306fc357",
   "gulpStartupTasks": [
     "sass",
     "watch"
