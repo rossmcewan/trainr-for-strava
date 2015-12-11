@@ -2,8 +2,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'services', 'controllers'])
-  .run(function ($ionicPlatform) {
+angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'angular-md5', 'services', 'controllers'])
+  .run(function ($ionicPlatform, $state, StravaUser) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -14,6 +14,16 @@ angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', '
         StatusBar.styleDefault();
       }
     });
+    Parse.initialize('GvT1P7jCNYp5yeO1C4bxGDRqooq5lhpvcBk1stOI', 'R6YNsm8x8cNdvNmb7Ru1cxgyvqjcsMXAcKrEaOXe');
+    var currentUser = Parse.User.current();
+
+    if (currentUser) {
+      StravaUser.user = currentUser;
+      StravaUser.accessToken = currentUser.get('stravaAccessToken');
+      $state.go('app.main');
+    }else{
+      $state.go('connect');
+    }
   })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     $ionicConfigProvider.tabs.position("bottom");
@@ -42,16 +52,16 @@ angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', '
         }
       }
     }).state('app.activity', {
-      url:'/activity',
-      views:{
+      url: '/activity',
+      views: {
         menuContent: {
           controller: 'ActivityController',
-          templateUrl:'templates/activity.html'
+          templateUrl: 'templates/activity.html'
         }
       },
-      params:{activity:null}
+      params: { activity: null }
     });
-    $urlRouterProvider.otherwise('/connect');
+    //$urlRouterProvider.otherwise('/connect');
   })
   .constant('StravaSettings', {
     clientId: '4290',
@@ -60,6 +70,6 @@ angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', '
   })
   .value('StravaUser', {
     accessToken: '',
-    athlete: {}
+    athlete: {},
   });
 

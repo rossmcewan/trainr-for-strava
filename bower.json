@@ -12,7 +12,9 @@
     "async": "~1.5.0",
     "lodash": "~3.10.1",
     "ngmap": "~1.14.15",
-    "angular-nvd3": "~1.0.4"
+    "angular-nvd3": "~1.0.4",
+    "parse": "~1.6.9",
+    "angular-md5": "~0.1.10"
   },
   "resolutions": {
     "ionic": "1.1.1",

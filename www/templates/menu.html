@@ -18,7 +18,7 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" ng-controller="SideMenuController">
     <ion-header-bar class="bar-calm">
     </ion-header-bar>
     <ion-content>
@@ -28,7 +28,8 @@
         <ion-item class="item item-icon-left" menu-close ui-sref="app.profile"><i class="icon ion-person"></i>Profile</ion-item>
         <ion-item class="item item-icon-left" menu-close ui-sref="app.calculators"><i class="icon ion-calculator"></i>Calculators</ion-item>
         <ion-item class="item item-icon-left" menu-close ui-sref="app.shop"><i class="icon ion-card"></i>Shop</ion-item>
-        <ion-item class="item item-icon-left" menu-close ui-sref="app.settings"><i class="icon ion-settings"></i>Settings</ion-item>
+        <ion-item class="item item-icon-left" menu-close ng-click="parseTest()"><i class="icon ion-settings"></i>Settings</ion-item>
+        <ion-item class="item item-icon-left" menu-close ng-click="signout()"><i class="icon ion-close"></i>Settings</ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
