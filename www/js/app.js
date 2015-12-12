@@ -19,6 +19,7 @@ angular.module('starter', ['ionic', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', '
 
     if (currentUser) {
       StravaUser.user = currentUser;
+      StravaUser.athlete = currentUser.get('athlete');
       StravaUser.accessToken = currentUser.get('stravaAccessToken');
       $state.go('app.main');
     }else{
