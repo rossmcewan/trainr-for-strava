@@ -17,6 +17,7 @@
   
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
   <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
   <script src="lib/ng-cordova-oauth/dist/ng-cordova-oauth.min.js"></script>
   <script src="lib/moment/min/moment.min.js"></script>
@@ -32,7 +33,8 @@
   <script src="lib/angular-md5/angular-md5.min.js"></script>
 
   <!-- cordova script (this will be a 404 during development) -->
-  <script src="cordova.js"></script>
+  <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
 
   <!-- your app's js -->
   <script src="js/controllers.js"></script>

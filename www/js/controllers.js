@@ -1,25 +1,25 @@
 var controllers = angular.module('controllers', []);
 
-controllers.controller('SideMenuController', function($scope, $state, StravaUser){
-	$scope.signout = function(){
+controllers.controller('SideMenuController', function ($scope, $state, StravaUser) {
+	$scope.signout = function () {
 		Parse.User.logOut();
 		StravaUser.athlete = null;
 		StravaUser.user = null;
 		StravaUser.accessToken = null;
 		$state.go('connect');
 	}
-	$scope.parseTest = function(){
+	$scope.parseTest = function () {
 		Parse.Cloud.run('hello', {
-			a:'Ross',
-			b:'McEwan'
+			a: 'Ross',
+			b: 'McEwan'
 		}, {
-			success:function(result){
-				console.log(result);
-			},
-			error:function(error){
-				console.log(error);
-			}
-		})
+				success: function (result) {
+					console.log(result);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			})
 	}
 });
 
@@ -34,6 +34,11 @@ controllers.controller('ConnectController', function ($scope, $state, $ionicLoad
 					StravaUser.user = user;
 					StravaUser.athlete = user.get('athlete');
 					StravaUser.accessToken = user.get('stravaAccessToken');
+					var ionicUser = Ionic.User.current();
+					if (!ionicUser.id) {
+						ionicUser.id = user.get('username');
+					}
+					ionicUser.save();
 					$state.go('app.main', {
 						clear: true
 					});
