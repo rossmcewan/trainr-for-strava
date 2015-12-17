@@ -2,6 +2,17 @@ var services = angular.module('services.user', []);
 
 services.factory('UserService', function ($q, $http, md5, IonicUser) {
 	return {
+		current: function(){
+			var currentUser = Parse.User.current();
+			if(!currentUser) return currentUser;
+			return {
+				accessToken:currentUser.get('stravaAccessToken'),
+				email:currentUser.get('email'),
+				firstname:currentUser.get('firstname'),
+				lastname:currentUser.get('lastname'),
+				image:currentUser.get('image')
+			}
+		},
 		login: function (stravaConnect) {
 			var username = stravaConnect.athlete.id.toString();
 			var password = md5.createHash(username);

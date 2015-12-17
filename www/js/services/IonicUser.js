@@ -2,7 +2,7 @@ var services = angular.module('services.ionic.user', []);
 
 services.factory('IonicUser', function () {
 	return {
-		onLogIn: function (user) {
+		onLogin: function (user) {
 			var ionicUser = Ionic.User.current();
 			if (!ionicUser.id) {
 				ionicUser.id = user.get('username');

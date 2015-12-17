@@ -2,7 +2,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'angular-svg-round-progress', 'angular-md5', 'services', 'controllers'])
+angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'angular-svg-round-progress', 'angular-md5', 'services', 'controllers', 'controllers.connect'])
   .run(function ($ionicPlatform, $state, StravaUser) {
     Ionic.io();
     $ionicPlatform.ready(function () {
@@ -16,20 +16,21 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
       }
     });
     Parse.initialize('GvT1P7jCNYp5yeO1C4bxGDRqooq5lhpvcBk1stOI', 'R6YNsm8x8cNdvNmb7Ru1cxgyvqjcsMXAcKrEaOXe');
-    var currentUser = Parse.User.current();
-    if (currentUser) {
-      StravaUser.user = currentUser;
-      StravaUser.athlete = currentUser.get('athlete');
-      StravaUser.accessToken = currentUser.get('stravaAccessToken');
-      var ionicUser = Ionic.User.current();
-      if(!ionicUser.id){
-        ionicUser.id = currentUser.get('username');
-      }
-      ionicUser.save();
-      $state.go('app.main');
-    }else{
-      $state.go('connect');
-    }
+    $state.go('connect');
+    // var currentUser = Parse.User.current();
+    // if (currentUser) {
+    //   StravaUser.user = currentUser;
+    //   StravaUser.athlete = currentUser.get('athlete');
+    //   StravaUser.accessToken = currentUser.get('stravaAccessToken');
+    //   var ionicUser = Ionic.User.current();
+    //   if(!ionicUser.id){
+    //     ionicUser.id = currentUser.get('username');
+    //   }
+    //   ionicUser.save();
+    //   $state.go('app.main');
+    // }else{
+    //   $state.go('connect');
+    // }
   })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     $ionicConfigProvider.tabs.position("bottom");
