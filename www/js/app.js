@@ -2,7 +2,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'angular-md5', 'services', 'controllers'])
+angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'angular-svg-round-progress', 'angular-md5', 'services', 'controllers'])
   .run(function ($ionicPlatform, $state, StravaUser) {
     Ionic.io();
     $ionicPlatform.ready(function () {
