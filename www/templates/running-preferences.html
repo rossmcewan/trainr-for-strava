@@ -1,0 +1,34 @@
+<ion-view title="Running Preferences">
+	<ion-content>
+		<ion-list>
+			<div class="item item-divider">Running Preferences</div>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Average runs per week</span>
+				<input type="number" placeholder="Average runs per week" ng-model="athleteSummary.averageCountPerWeek">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Average distance per week</span>
+				<input type="number" placeholder="Average distance per week" ng-model="athleteSummary.averageDistancePerWeek">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Average distance per run</span>
+				<input type="number" placeholder="Average distance per run" ng-model="athleteSummary.averageDistancePerRun">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Longest run</span>
+				<input type="number" placeholder="Longest run" ng-model="athleteSummary.longest">
+			</label>
+			<div class="item item-divider text-center">Running Days</div>
+			<ion-checkbox ng-repeat="runningDay in athleteSummary.runDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<div class="item item-divider text-center">Long Running Days</div>
+			<ion-checkbox ng-repeat="runningDay in athleteSummary.longRunDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<div class="item item-divider text-center">Workout Days</div>
+			<ion-checkbox ng-repeat="runningDay in athleteSummary.workoutDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<ion-item>
+				<button class="button button-block button-calm" ui-sref="app.performancePreferences({athleteSummary:athleteSummary})">
+					My performance ...
+				</button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

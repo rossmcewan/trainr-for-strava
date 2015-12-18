@@ -1,1 +1,1 @@
-var services = angular.module('services', ['services.strava', 'services.user', 'services.ionic.user', 'services.program']);
+var services = angular.module('services', ['services.strava', 'services.user', 'services.ionic.user', 'services.program', 'services.athlete']);

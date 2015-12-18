@@ -3,7 +3,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.rCalendar', 'ngMap', 'nvd3', 'angular-svg-round-progress', 'angular-md5', 'services', 'controllers', 'controllers.connect'])
-  .run(function ($ionicPlatform, $state, StravaUser) {
+  .run(function ($ionicPlatform, $state) {
     Ionic.io();
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -17,20 +17,6 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
     });
     Parse.initialize('GvT1P7jCNYp5yeO1C4bxGDRqooq5lhpvcBk1stOI', 'R6YNsm8x8cNdvNmb7Ru1cxgyvqjcsMXAcKrEaOXe');
     $state.go('connect');
-    // var currentUser = Parse.User.current();
-    // if (currentUser) {
-    //   StravaUser.user = currentUser;
-    //   StravaUser.athlete = currentUser.get('athlete');
-    //   StravaUser.accessToken = currentUser.get('stravaAccessToken');
-    //   var ionicUser = Ionic.User.current();
-    //   if(!ionicUser.id){
-    //     ionicUser.id = currentUser.get('username');
-    //   }
-    //   ionicUser.save();
-    //   $state.go('app.main');
-    // }else{
-    //   $state.go('connect');
-    // }
   })
   .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     $ionicConfigProvider.tabs.position("bottom");
@@ -42,20 +28,11 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
       url: '/app',
       templateUrl: 'templates/menu.html',
       abstract: true
-    }).state('app.welcome', {
-      url: '/welcome',
-      views: {
-        menuContent: {
-          controller: 'WelcomeController',
-          templateUrl: 'templates/welcome.html'
-        }
-      }
     }).state('app.main', {
       url: '/main',
       views: {
         menuContent: {
-          controller: 'MainController',
-          templateUrl: 'templates/main.html'
+          controller: 'MainController'
         }
       }
     }).state('app.activity', {
@@ -67,6 +44,67 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
         }
       },
       params: { activity: null }
+    }).state('app.new', {
+      url:'/new-program',
+      views:{
+        menuContent:{
+          controller:'NewProgramController',
+          templateUrl:'templates/new-program.html'
+        }
+      },
+      resolve:{
+        athleteSummary:function(AthleteService){
+          return AthleteService.getAthleteSummary();
+        }
+      }
+    }).state('app.runningPreferences', {
+      url:'/running-preferences',
+      views:{
+        menuContent:{
+          controller:'RunningPreferencesController',
+          templateUrl:'templates/running-preferences.html'
+        }
+      },
+      params:{
+        athleteSummary:null
+      }
+    }).state('app.performancePreferences', {
+      url:'/performance-preferences',
+      views:{
+        menuContent:{
+          controller:'PerformancePreferencesController',
+          templateUrl:'templates/performance-preferences.html'
+        }
+      },
+      params:{
+        athleteSummary:null
+      }
+    }).state('app.goalPreferences', {
+      url:'/goal-preferences',
+      views:{
+        menuContent:{
+          controller:'GoalPreferencesController',
+          templateUrl:'templates/goal-preferences.html'
+        }
+      },
+      params:{
+        athleteSummary:null
+      }
+    }).state('app.current', {
+      url:'/current-program',
+      views:{
+        menuContent:{
+          controller:'CurrentProgramController',
+          templateUrl:'templates/current-program.html'
+        }
+      }
+    }).state('app.error', {
+      url:'/error',
+      views:{
+        menuContent:{
+          templateUrl:'templates/error.html'
+        }
+      }
     });
     //$urlRouterProvider.otherwise('/connect');
   })
@@ -74,9 +112,5 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
     clientId: '4290',
     clientSecret: 'fbea070c5dcd30b96e276bcd46f56b11c15e7a7e',
     appScope: ['view_private', 'write']
-  })
-  .value('StravaUser', {
-    accessToken: '',
-    athlete: {},
   });
 

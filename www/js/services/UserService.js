@@ -4,7 +4,7 @@ services.factory('UserService', function ($q, $http, md5, IonicUser) {
 	return {
 		current: function(){
 			var currentUser = Parse.User.current();
-			if(!currentUser) return currentUser;
+			if(!currentUser) return null;
 			return {
 				accessToken:currentUser.get('stravaAccessToken'),
 				email:currentUser.get('email'),
@@ -12,6 +12,10 @@ services.factory('UserService', function ($q, $http, md5, IonicUser) {
 				lastname:currentUser.get('lastname'),
 				image:currentUser.get('image')
 			}
+		},
+		logout:function(){
+			console.log('logging out');
+			return Parse.User.logOut();
 		},
 		login: function (stravaConnect) {
 			var username = stravaConnect.athlete.id.toString();
