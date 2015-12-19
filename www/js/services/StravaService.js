@@ -10,23 +10,41 @@ services.factory('StravaService', function ($q, $http, $cordovaOauth, StravaSett
 			});
 			//return $cordovaOauth.strava(StravaSettings.clientId, StravaSettings.clientSecret, StravaSettings.appScope);
 		},
+		getAthlete:function(){
+			var currentUser = UserService.current();
+			if (!currentUser) {
+				return $q(function (resolve, reject) {
+					return reject(new Error('Current user not set'));
+				})
+			}
+			return $http.jsonp('https://www.strava.com/api/v3/athletes/'+currentUser.username+'?callback=JSON_CALLBACK&access_token=' + currentUser.accessToken);
+		},
 		getActivities: function () {
 			var currentUser = UserService.current();
-			if(!currentUser){
-				return $q(function(resolve, reject){
+			if (!currentUser) {
+				return $q(function (resolve, reject) {
 					return reject(new Error('Current user not set'));
 				})
 			}
 			return $http.jsonp('https://www.strava.com/api/v3/athlete/activities?callback=JSON_CALLBACK&access_token=' + currentUser.accessToken);
 		},
-		getActivity: function(id) {
+		getActivity: function (id) {
 			var currentUser = UserService.current();
-			if(!currentUser){
-				return $q(function(resolve, reject){
+			if (!currentUser) {
+				return $q(function (resolve, reject) {
 					return reject(new Error('Current user not set'));
 				})
 			}
-			return $http.jsonp('https://www.strava.com/api/v3/activities/'+id+'?callback=JSON_CALLBACK&access_token=' + currentUser.accessToken);
+			return $http.jsonp('https://www.strava.com/api/v3/activities/' + id + '?callback=JSON_CALLBACK&access_token=' + currentUser.accessToken);
+		},
+		getRoutes: function () {
+			var currentUser = UserService.current();
+			if (!currentUser) {
+				return $q(function (resolve, reject) {
+					return reject(new Error('Current user not set'));
+				})
+			}
+			return $http.jsonp('https://www.strava.com/api/v3/athletes/' + currentUser.username + '/routes?callback=JSON_CALLBACK&access_token=' + currentUser.accessToken);
 		}
     }
 });

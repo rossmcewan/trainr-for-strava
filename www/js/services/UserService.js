@@ -7,6 +7,7 @@ services.factory('UserService', function ($q, $http, md5, IonicUser) {
 			if(!currentUser) return null;
 			return {
 				accessToken:currentUser.get('stravaAccessToken'),
+				username:currentUser.get('username'),
 				email:currentUser.get('email'),
 				firstname:currentUser.get('firstname'),
 				lastname:currentUser.get('lastname'),

@@ -55,6 +55,9 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
       resolve:{
         athleteSummary:function(AthleteService){
           return AthleteService.getAthleteSummary();
+        },
+        stravaAthlete:function(StravaService){
+          return StravaService.getAthlete()
         }
       }
     }).state('app.runningPreferences', {
@@ -66,7 +69,8 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
         }
       },
       params:{
-        athleteSummary:null
+        athleteSummary:null,
+        stravaAthlete:null
       }
     }).state('app.performancePreferences', {
       url:'/performance-preferences',
@@ -77,7 +81,8 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
         }
       },
       params:{
-        athleteSummary:null
+        athleteSummary:null,
+        stravaAthlete:null
       }
     }).state('app.goalPreferences', {
       url:'/goal-preferences',
@@ -88,7 +93,8 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
         }
       },
       params:{
-        athleteSummary:null
+        athleteSummary:null,
+        stravaAthlete:null
       }
     }).state('app.current', {
       url:'/current-program',
