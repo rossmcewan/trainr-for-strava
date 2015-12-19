@@ -8,6 +8,17 @@ controllers.controller('NewProgramController', function ($scope, $state, $stateP
 	$scope.user = UserService.current();
 	$scope.athleteSummary = athleteSummary;
 	$scope.stravaAthlete = stravaAthlete.data;
+	
+	if($scope.stravaAthlete.measurement_preference == 'feet'){
+		$scope.athleteSummary.formattedAverageDistancePerWeek = math.eval($scope.athleteSummary.averageDistancePerWeek + ' feet in miles').toString();	
+		$scope.athleteSummary.formattedAverageDistancePerRun = math.eval($scope.athleteSummary.averageDistancePerRun + ' feet in miles').toString();
+		$scope.athleteSummary.formattedLongestRun = math.eval($scope.athleteSummary.longest + ' feet in miles').toString();
+	}
+	if($scope.stravaAthlete.measurement_preference == 'meters'){
+		$scope.athleteSummary.formattedAverageDistancePerWeek = math.eval($scope.athleteSummary.averageDistancePerWeek + ' meters in km').toString();	
+		$scope.athleteSummary.formattedAverageDistancePerRun = math.eval($scope.athleteSummary.averageDistancePerRun + ' meters in km').toString();
+		$scope.athleteSummary.formattedLongestRun = math.eval($scope.athleteSummary.longest + ' meters in km').toString();
+	}
 });
 
 controllers.controller('RunningPreferencesController', function ($scope, $state, $stateParams, $ionicHistory, UserService) {
@@ -36,8 +47,6 @@ controllers.controller('PerformancePreferencesController', function ($scope, $st
 		humanizedAgo: moment.duration(moment().diff(item.start_date_local)).humanize(),
 		formattedStartDate: moment(item.start_date_local).format('HH:mm:ss on ddd, MMMM DD, YYYY'),
 		formattedMovingTime: moment.utc(item.moving_time * 1000).format('HH:mm:ss'),
-		formattedDistance: (item.distance / 1000).toFixed(2) + ' km',
-		formattedAveragePace: moment.utc((16.666667 / item.average_speed) * 60 * 1000).format('mm:ss') + ' /km',
 		map: {
 			center: {
 				latitude: item.start_latlng[0],
@@ -46,6 +55,14 @@ controllers.controller('PerformancePreferencesController', function ($scope, $st
 			zoom: 12,
 			polyline: polyline.decode(item.map.summary_polyline)
 		}
+	}
+	if($scope.stravaAthlete.measurement_preference == 'feet'){
+		$scope.activity.formattedDistance = math.eval(item.distance + ' feet in miles').toString();
+		$scope.activity.formattedAveragePace = moment.utc((88 / item.average_speed) * 60 * 1000).format('mm:ss') + ' /mile';
+	}
+	if($scope.stravaAthlete.measurement_preference == 'meters'){
+		$scope.activity.formattedDistance = math.eval(item.distance + ' meters in km').toString();
+		$scope.activity.formattedAveragePace = moment.utc((16.666667 / item.average_speed) * 60 * 1000).format('mm:ss') + ' /km';
 	}
 
 	$scope.format = function (seconds) {

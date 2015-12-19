@@ -1,10 +1,11 @@
-<ion-view title="Performance Preferences">
+<ion-view title="Performance Preferences" cache-view="true">
 	<ion-content>
 		<ion-list>
 			<div class="item item-divider text-center">Performance</div>
 			<ion-item>
 				<div class="text-left item-text-wrap">
-					<p>Based on your Strava activities, this was the best performance we could find. Using this, we have calculated a training score and a set of training paces for you.</p> 
+					<p>Based on your Strava activities, this was the best performance we could find. Using this, we have calculated a training
+						score and a set of training paces for you.</p>
 				</div>
 			</ion-item>
 			<a class="item" href="#">
@@ -15,7 +16,7 @@
 			<div class="item">
 				<ng-map data-tap-disabled="true " class="run-map-feed " zoom="{{activity.map.zoom}} " center="[{{activity.map.center.latitude}}, {{activity.map.center.longitude}}]
                 " scrollwheel="false " disable-default-u-i="true " draggable="false" disable-double-click-zoom="true">
-                  <shape name="polyline " id="foo " path="{{activity.map.polyline}} " stroke-color="#FF0000
+					<shape name="polyline " id="foo " path="{{activity.map.polyline}} " stroke-color="#FF0000
                 " stroke-opacity="1.0 " stroke-weight="2 "></shape>
 				</ng-map>
 			</div>
@@ -45,12 +46,20 @@
 			</div>
 			<ion-item>
 				<div class="text-left item-text-wrap">
-					<p>A key philosophy of our coaching is using performance to guide training. You don't get to run faster until you can race faster. If you feel we have miscalculated your ability, don't worry, you'll  have the opportunity to rectify that in the first week.</p>
+					<p>A key philosophy of our coaching is using performance to guide training. You don't get to run faster until you can race
+						faster. If you feel we have miscalculated your ability, don't worry, you'll have the opportunity to rectify that in
+						the first week.</p>
 				</div>
 			</ion-item>
 			<div class="item item-divider text-center">Score</div>
-			<ion-item>
-				<div class="text-center"><h2>{{athleteSummary.bestScore.score}}</h2></div>
+			<ion-item class="row">
+				<div class="col score">
+					<h1 class="score">{{athleteSummary.bestScore.score}}</h1>
+				</div>
+				<div class="col">
+				<div class="pull-right" round-progress max="100" current="athleteSummary.bestScore.score" color="#fc4c02" bgcolor="#eaeaea" radius="25" stroke="3" rounded="true"
+				clockwise="true" responsive="false" duration="800" animation="easeInOutQuart">{{athleteSummary.bestScore.score}}</div>
+				</div>
 			</ion-item>
 			<div class="item item-divider text-center">Pace Zones</div>
 			<div class="item row">
@@ -79,7 +88,7 @@
 			</div>
 			<ion-item>
 				<button class="button button-block button-calm" ui-sref="app.goalPreferences({athleteSummary:athleteSummary, stravaAthlete:stravaAthlete})">
-					My goals
+					Next ... my goals
 				</button>
 			</ion-item>
 		</ion-list>
