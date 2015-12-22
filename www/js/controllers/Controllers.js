@@ -1,0 +1,1 @@
+var controllers = angular.module('controllers', ['controllers.application', 'controllers.main', 'controllers.connect', 'controllers.program']);

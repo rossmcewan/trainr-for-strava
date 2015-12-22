@@ -1,0 +1,21 @@
+<ion-modal-view ng-controller="RouteController">
+	<ion-header-bar class="bar bar-header bar-calm">
+		<h1 class="title">Select Route</h1>
+		<button class="button button-clear button-primary" ng-click="modal.hide()"><i class="ion-close"></i></button>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<ion-list>
+			<div ng-repeat="route in routes" ng-click="selectRoute(route)">
+				<a class="item">
+					<h2>{{route.name}}</h2>
+					<p><small>{{route.formattedDistance}}&nbsp;&nbsp;&nbsp;&nbsp;{{route.formattedElevation}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small></p>
+				</a>
+				<a class="item ">
+					<ng-map data-tap-disabled="true " class="run-map-feed " zoom="{{route.map.zoom}} " center="[{{route.map.center.latitude}}, {{route.map.center.longitude}}]" scrollwheel="false " disable-default-u-i="true " draggable="false" disable-double-click-zoom="true">
+						<shape name="polyline " id="foo " path="{{route.map.polyline}} " stroke-color="#FF0000" stroke-opacity="1.0 " stroke-weight="2 "></shape>
+					</ng-map>
+				</a>
+			</div>
+		</ion-list>
+	</ion-content>
+</ion-modal-view>

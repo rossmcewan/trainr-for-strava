@@ -1,0 +1,34 @@
+<ion-view title="Running Preferences" cache-view="true">
+	<ion-content>
+		<ion-list>
+			<ion-item class="item-divider">Running History</ion-item>
+			<ion-item>
+				<h2>Average runs per week</h2>
+				<p>{{athleteSummary.averageCountPerWeek}}</p>
+			</ion-item>
+			<ion-item>
+				<h2>Average distance per week</h2>
+				<p>{{athleteSummary.formattedAverageDistancePerWeek}}</p>
+			</ion-item>
+			<ion-item>
+				<h2>Average distance per run</h2>
+				<p>{{athleteSummary.formattedAverageDistancePerRun}}</p>
+			</ion-item>
+			<ion-item>
+				<h2>Longest run</h2>
+				<p>{{athleteSummary.formattedLongestRun}}</p>
+			</ion-item>
+			<ion-item class="item-divider">What days do you run on?</ion-item>
+			<ion-checkbox class="checkbox-calm" ng-repeat="runningDay in athleteSummary.runDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<ion-item class="item-divider">What day would you like to do your long run?</ion-item>
+			<ion-checkbox class="checkbox-calm" ng-repeat="runningDay in athleteSummary.longRunDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<ion-item class="item-divider">What days would you like to do workouts on?</ion-item>
+			<ion-checkbox class="checkbox-calm" ng-repeat="runningDay in athleteSummary.workoutDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<ion-item>
+				<button class="button button-block button-calm" ui-sref="app.performancePreferences({athleteSummary:athleteSummary, stravaAthlete:stravaAthlete})">
+					Next ... my performance
+				</button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
