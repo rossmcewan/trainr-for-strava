@@ -13,24 +13,22 @@
 			<div class="item item-divider text-center">Goal Date</div>
 			<label class="item item-input item-floating-label">
 				<span class="input-label">Date</span>
-				<input type="date" placeholder="Date" ng-model="goal.date" required>
+				<input type="date" placeholder="Date" ng-model="goal.date">
 			</label>
-			<div class="item item-divider item-button-right">Goal Details
+			<div class="item look-like-item-divider text-center item-button-right">Goal Details
 				<button class="button button-calm" ng-click="selectRoute()">routes</button>
 			</div>
 			<label class="item item-input item-floating-label">
-				<span class="input-label">Distance</span>
-				<input type="number" placeholder="Distance" ng-model="goal.distance" required>
+				<span class="input-label">Distance ({{getDistanceMeasurementUnit()}})</span>
+				<input type="number" placeholder="Distance ({{getDistanceMeasurementUnit()}})" ng-model="goal.distance">
 			</label>
 			<label class="item item-input item-floating-label">
-				<span class="input-label">Elevation Gain</span>
-				<input type="number" placeholder="Elevation Gain" ng-model="goal.elevationGain" required>
+				<span class="input-label">Elevation Gain ({{getElevationMeasurementUnit()}})</span>
+				<input type="number" placeholder="Elevation Gain ({{getElevationMeasurementUnit()}})" ng-model="goal.elevationGain">
 			</label>
-			<ion-item>
-				<button class="button button-block button-calm">
-					Gimme my program
-				</button>
-			</ion-item>
 		</ion-list>
 	</ion-content>
+	<ion-footer-bar align-title="left">
+		<button class="button icon-right ion-chevron-right button-calm pull-right" ng-click="next()">Get my program</button>
+	</ion-footer-bar>
 </ion-view>

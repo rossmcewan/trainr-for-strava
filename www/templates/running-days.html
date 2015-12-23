@@ -1,0 +1,13 @@
+<ion-view title="Running Days" cache-view="true">
+	<ion-content>
+		<ion-list>
+			<ion-item class="item-divider">What days do you run on?</ion-item>
+			<ion-checkbox class="checkbox-calm" ng-repeat="runningDay in athleteSummary.runDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+			<ion-item class="item-divider">What day would you like to do your long run?</ion-item>
+			<ion-checkbox class="checkbox-calm" ng-change="deactivateOtherDays(runningDay, athleteSummary.longRunDays)" ng-repeat="runningDay in athleteSummary.longRunDays" ng-model="runningDay.active">{{runningDay.dayName}}</ion-checkbox>
+		</ion-list>
+	</ion-content>
+	<ion-footer-bar align-title="left">
+		<button class="button icon-right ion-chevron-right button-calm pull-right" ng-click="next()">Current Performance</button>
+	</ion-footer-bar>
+</ion-view>

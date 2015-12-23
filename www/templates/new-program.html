@@ -7,6 +7,11 @@
 				</div>
 			</ion-item>
 			<ion-item>
+				<div class="row">
+					<img src="{{user.image}}" class="round-image">
+				</div>
+			</ion-item>
+			<ion-item>
 				<div class="text-center item-text-wrap">
 					<h2>Welcome to TRAINR. Your Strava virtual running coach.</h2>
 				</div>
@@ -21,7 +26,7 @@
 				</div>
 			</ion-item>
 			<ion-item>
-				<button class="button button-block button-calm" ui-sref="app.runningPreferences({athleteSummary:athleteSummary, stravaAthlete:stravaAthlete})">
+				<button class="button button-block button-calm" ui-sref="app.runningSummary({athleteSummary:athleteSummary, stravaAthlete:stravaAthlete})">
 					Let's do this
 				</button>
 			</ion-item>

@@ -60,12 +60,24 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordovaOauth', 'ui.r
           return StravaService.getAthlete()
         }
       }
-    }).state('app.runningPreferences', {
-      url:'/running-preferences',
+    }).state('app.runningDays', {
+      url:'/running-days',
       views:{
         menuContent:{
-          controller:'RunningPreferencesController',
-          templateUrl:'templates/running-preferences.html'
+          controller:'RunningDaysController',
+          templateUrl:'templates/running-days.html'
+        }
+      },
+      params:{
+        athleteSummary:null,
+        stravaAthlete:null
+      }
+    }).state('app.runningSummary', {
+      url:'/running-summary',
+      views:{
+        menuContent:{
+          controller:'RunningSummaryController',
+          templateUrl:'templates/running-summary.html'
         }
       },
       params:{

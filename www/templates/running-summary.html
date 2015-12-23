@@ -1,0 +1,67 @@
+<ion-view title="Running Summary" cache-view="true">
+	<ion-content>
+		<ion-list>
+			<ion-item class="item-divider">Your last few weeks</ion-item>
+			<ion-item class="row">
+				<div class="col col-60">
+					<h2>Average runs per week</h2>
+					<p>{{athleteSummary.averageNumberOfActivitiesPerWeek}}</p>
+				</div>
+				<nvd3 class="col col-40" options="averageRunsPerWeekOptions" data="averageRunsPerWeekData" api="averageRunsPerWeekChart.api"></nvd3>
+			</ion-item>
+			<ion-item class="row">
+				<div class="col col-60">
+					<h2>Average weekly distance</h2>
+					<p>{{athleteSummary.formattedAverageDistancePerWeek}}</p>
+				</div>
+				<nvd3 class="col col-40" options="averageDistancePerWeekOptions" data="averageDistancePerWeekData" api="averageDistancePerWeekChart.api"></nvd3>
+			</ion-item>
+			<ion-item class="row">
+				<div class="col">
+					<h2>Average distance per run</h2>
+					<p>{{athleteSummary.formattedAverageDistancePerRun}}</p>
+				</div>
+			</ion-item>
+			<ion-item class="row">
+				<div class="col">
+					<h2>Longest run</h2>
+					<p>{{longestRun.title}}</p>
+					<p>{{longestRun.humanizedAgo}} ago</p>
+					<ng-map data-tap-disabled="true " class="run-map-preferences" zoom="{{longestRun.map.zoom}} " center="[{{longestRun.map.center.latitude}}, {{longestRun.map.center.longitude}}]"
+					scrollwheel="false " disable-default-u-i="true " draggable="false" disable-double-click-zoom="true">
+						<shape name="polyline " id="foo " path="{{longestRun.map.polyline}} " stroke-color="#FF0000" stroke-opacity="1.0 " stroke-weight="2 "></shape>
+					</ng-map>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="row">
+					<div class="col text-center">
+						<h2>{{longestRun.formattedMovingTime}}</h2>
+						<p><small>MOVING TIME</small></p>
+					</div>
+					<div class="col text-center">
+						<h2>{{longestRun.formattedDistance}}</h2>
+						<p><small>DISTANCE</small></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<h2>{{longestRun.formattedAveragePace}}</h2>
+						<p><small>AVERAGE PACE</small></p>
+					</div>
+					<div class="col text-center">
+						<h2>{{longestRun.activity.total_elevation_gain}}</h2>
+						<p><small>ELEVATION GAIN</small></p>
+					</div>
+					<div class="col text-center">
+						<h2>{{longestRun.activity.calories||'0'}}</h2>
+						<p><small>CALORIES</small></p>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+	<ion-footer-bar align-title="left">
+		<button class="button icon-right ion-chevron-right button-calm pull-right" ng-click="next()">Running Days</button>
+	</ion-footer-bar>
+</ion-view>
