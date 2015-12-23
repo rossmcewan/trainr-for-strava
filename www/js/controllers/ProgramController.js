@@ -113,86 +113,9 @@ controllers.controller('RunningSummaryController', function ($scope, $state, $st
 		key: "Average Distance per Week",
 		values: weeklyItems
 	}];
-	
-	// //$scope.averageRunsPerWeekChart.api.refresh()
-	
-	// $scope.chart = {};
-	// $scope.options = {
-	// 	chart: {
-	// 		type: 'multiChart',
-	// 		margin : {
-	// 			top: 0,
-	// 			right: 0,
-	// 			bottom: 0,
-	// 			left: 0
-	// 		},
-	// 		color: d3.scale.category10().range(),
-	// 		//useInteractiveGuideline: true,
-	// 		duration: 500,
-	// 		xAxis: {
-	// 			tickFormat: function(d){
-	// 				return d;
-	// 			}
-	// 		},
-	// 		// type: 'discreteBarChart',
-	// 		// height: 50,
-	// 		// width: 100,
-	// 		// margin: {
-	// 		// 	top: 0,
-	// 		// 	right: 0,
-	// 		// 	bottom: 0,
-	// 		// 	left: 10
-	// 		// },
-	// 		// color: function (d, i) {
-	// 		// 	return 'green';
-	// 		// },
-	// 		// refreshDataOnly: true,
-	// 		// deepWatchData: true,
-	// 		// x: function (d) { return d.label; },
-	// 		// y: function (d) { return getDayDistance(d.label); },
-	// 		// transitionDuration: 500,
-	// 		// showXAxis: false,
-	// 		// showYAxis: false,
-	// 		// showValues: false
-	// 	}
-	// };
-	// $scope.data = [
-	// {
-	// 	key: "This weeks distance",
-	// 	type:'bar',
-	// 	yAxis:1,
-	// 	// x: function (d) { return d.label; },
-	// 	// y: function (d) { return getDayDistance(d.label); },
-	// 	values: [
-	// 		{ "x": "1", "y": 100 },
-	// 		{ "x": "2", "y": 50 },
-	// 		{ "x": "3", "y": 0 },
-	// 		{ "x": "4", "y": 50 },
-	// 		{ "x": "5", "y": 55 },
-	// 		{ "x": "6", "y": 19 },
-	// 		{ "x": "7", "y": 44 },
-	// 	]
-	// },
-	// {
-	// 	key: 'Average',
-	// 	type: 'line',
-	// 	yAxis: 1,
-	// 	values: [
-	// 		{ "x": "1", "y": 50 },
-	// 		{ "x": "2", "y": 25 },
-	// 		{ "x": "3", "y": 0 },
-	// 		{ "x": "4", "y": 25 },
-	// 		{ "x": "5", "y": 26 },
-	// 		{ "x": "6", "y": 9 },
-	// 		{ "x": "7", "y": 22 }
-	// 	]
-	// }];
-	// function getDayDistance(label){
-	// 	return 50;
-	// }
 });
 
-controllers.controller('RunningDaysController', function ($scope, $state, $stateParams, $ionicHistory, $ionicPopup, UserService) {
+controllers.controller('RunningDaysController', function ($scope, $state, $stateParams, $ionicHistory, $ionicPopup, UserService, AthleteService) {
 	$scope.user = UserService.current();
 	$scope.athleteSummary = $stateParams.athleteSummary;
 	$scope.stravaAthlete = $stateParams.stravaAthlete;
@@ -208,9 +131,16 @@ controllers.controller('RunningDaysController', function ($scope, $state, $state
 	
 	$scope.next = function(){
 		if(validate()){
-			$state.go('app.performancePreferences', {
-				athleteSummary:$scope.athleteSummary, 
-				stravaAthlete:$scope.stravaAthlete
+			AthleteService.saveRunningPreferences({
+				runDays:$scope.athleteSummary.runDays,
+				longRunDays:$scope.athleteSummary.longRunDays
+			}).then(function(saved){
+				$state.go('app.performancePreferences', {
+					athleteSummary:$scope.athleteSummary, 
+					stravaAthlete:$scope.stravaAthlete
+				});
+			}, function(error){
+				return $state.go('app.error');
 			});
 		}else{
 			$ionicPopup.alert({
