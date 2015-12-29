@@ -1,1 +1,84 @@
-<ion-view title="Current Program"></ion-view>
+<ion-view title="{{title}}">
+  <ion-pane>
+    <ion-tabs class="tabs-striped tabs-color-calm">
+
+      <ion-tab title="Overview" on-select="setTitle('Overview')">
+        <ion-view>
+          <ion-content>
+            <div class="list">
+              <a class="item item-avatar" href="#">
+                <img src="{{user.image}}">
+                <h2>{{user.firstname}} {{user.lastname}}</h2>
+                <!--<p>{{user.athlete.city}}, {{user.athlete.state}}</p>-->
+              </a>
+            </div>
+          </ion-content>
+        </ion-view>
+      </ion-tab>
+
+      <ion-tab title="Program" on-select="setTitle('Program')" ng-controller="ProgramController">
+        <ion-view>
+          <ion-header-bar align-title="left" class="bar-subheader bar-stable feed-subheader">
+            <div class="row">
+              <div class="col col-75 header-label">
+                <p><small><small>THIS WEEK</small></small>
+                </p>
+                <p><small><small>{{distanceThisWeek}}/{{plannedDistanceThisWeek}}</small></small>
+                </p>
+              </div>
+              <div class="col col-25 header-chart">
+                <nvd3 options="options" data="data" api="chart.api"></nvd3>
+              </div>
+            </div>
+          </ion-header-bar>
+          <ion-content class="has-subheader below-feed-subheader">
+            <!--<div class="list" ng-repeat="run in model.runs ">
+              <a class="item item-avatar " ui-sref="app.activity({activity:run}) ">
+                <img src="{{user.athlete.profile_medium}}
+                ">
+                <h2>{{run.activity.name}}</h2>
+                <p><small>{{run.formattedStartDate}}</small></p>
+                <p><small>{{(run.activity.distance/1000).toFixed(2)}}km&nbsp;&nbsp;&nbsp;&nbsp;{{run.activity.total_elevation_gain}}m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="ion-trophy ">&nbsp;{{run.activity.kudos_count}}</i></small></p>
+              </a>
+              <a class="item ">
+                <ng-map data-tap-disabled="true " class="run-map-feed " zoom="{{run.map.zoom}} " center="[{{run.map.center.latitude}}, {{run.map.center.longitude}}]
+                " scrollwheel="false " disable-default-u-i="true " draggable="false" disable-double-click-zoom="true">
+                  <shape name="polyline " id="foo " path="{{run.map.polyline}} " stroke-color="#FF0000
+                " stroke-opacity="1.0 " stroke-weight="2 "></shape>
+                  <a class="button button-clear button-small button-icon button-calm map-button icon ion-thumbsup "></a>
+                  </ng-map>
+              </a>
+              <div class="item tabs tabs-secondary tabs-icon-left ">
+                <a class="tab-item " href="# ">
+                  <i class="icon ion-thumbsup "></i> Like
+                </a>
+                <a class="tab-item " href="# ">
+                  <i class="icon ion-chatbox "></i> Comment
+                </a>
+                <a class="tab-item " href="# ">
+                  <i class="icon ion-android-share-alt "></i> Share
+                </a>
+              </div>
+            </div>-->
+          </ion-content>
+        </ion-view>
+      </ion-tab>
+
+      <ion-tab title="Calendar " on-select="setTitle( 'Calendar') ">
+        <ion-view>
+          <ion-content>
+            <div class="list ">
+              <a class="item item-avatar " href="# ">
+                <img src="{{user.image}} ">
+                <h2>{{user.firstname}} {{user.lastname}}</h2>
+                <!--<p>{{user.athlete.city}}, {{user.athlete.state}}</p>-->
+              </a>
+            </div>
+            <calendar calendar-mode="model.mode " event-source="model.runs " data-tap-disabled="true "></calendar>
+          </ion-content>
+        </ion-view>
+      </ion-tab>
+
+    </ion-tabs>
+  </ion-pane>
+</ion-view>

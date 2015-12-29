@@ -196,6 +196,7 @@ controllers.controller('GoalPreferencesController', function ($scope, $state, $s
 	$scope.user = UserService.current();
 	$scope.athleteSummary = $stateParams.athleteSummary;
 	$scope.stravaAthlete = $stateParams.stravaAthlete;
+	$scope.errors = [];
 	
 	$ionicModal.fromTemplateUrl('templates/routes.html', {
 		scope: $scope,
@@ -217,7 +218,8 @@ controllers.controller('GoalPreferencesController', function ($scope, $state, $s
 	});
 
 	$scope.goal = {
-		date: moment().day(7).add(6, 'weeks').toDate()
+		date: moment().day(7).add(6, 'weeks').toDate(),
+		elevation: 0
 	};
 	
 	$scope.getElevationMeasurementUnit = function(){
@@ -264,8 +266,32 @@ controllers.controller('GoalPreferencesController', function ($scope, $state, $s
 	}
 	
 	$scope.next = function(){
+		var distanceMeasurement = $scope.getDistanceMeasurementUnit();
+		var distance;
+		if(distanceMeasurement == 'miles'){
+			distance = getValue(math.eval($scope.goal.distance + ' miles in meters'));
+		}else{
+			distance = getValue(math.eval($scope.goal.distance + ' km in meters'));
+		}
 		if(validate()){
-			return ProgramService.createProgram().then(function(result){
+			var goalDate = moment($scope.goal.date);
+			return ProgramService.createProgram({
+				goal:{
+					distance:distance,
+					elevation:getValue(math.eval($scope.goal.elevation + ' ' + $scope.stravaAthlete.measurement_preference + ' in meters')),
+					date:{
+						year:goalDate.format('YYYY'),
+						month:goalDate.format('MM'),
+						day:goalDate.format('DD')
+					},
+					routeId:$scope.goal.route&&$scope.goal.route.id
+				},
+				today:{
+					year:moment().format('YYYY'),
+					month:moment().format('MM'),
+					day:moment().format('DD')
+				}
+			}).then(function(result){
 				return $state.go('app.current');
 			}, function(error){
 				return $state.go('app.error', {
@@ -284,19 +310,58 @@ controllers.controller('GoalPreferencesController', function ($scope, $state, $s
 			});
 		}
 	}
+	
+	function validate(){
+		var distanceMeasurement = $scope.getDistanceMeasurementUnit();
+		var goalDate = moment($scope.goal.date);
+		var today = moment();
+		var diff = Math.abs(today.diff(goalDate, 'weeks'));
+		if(diff < 6){
+			$scope.errors.push('Your goal must be more than 6 weeks away');
+		}
+		if(diff > 24){
+			$scope.errors.push('Your goal must be less than 24 weeks away');
+		}
+		if(!$scope.goal.distance){
+			$scope.errors.push('Please enter a goal distance');
+		}
+		if($scope.goal.distance < 0){
+			$scope.errors.push('Your goal distance must be more than zero');
+		}
+		if(getValue(math.eval($scope.goal.distance + ' ' + distanceMeasurement + ' in meters')) > 160934){
+			if(distanceMeasurement == 'miles'){
+				$scope.errors.push('Your goal distance must be less than 100 miles');
+			}else{
+				$scope.errors.push('Your goal distance must be less than 160.934 km');
+			}
+		}
+		if(!$scope.goal.elevation){
+			$scope.errors.push('Please enter a goal elevation');
+		}
+		if(getValue(math.eval($scope.goal.elevation + ' ' + $scope.stravaAthlete.measurement_preference + ' in meters')) > 8000){
+			if($scope.stravaAthlete.measurement_preference == 'feet'){
+				$scope.errors.push('Your goal elevation must be less than 26246.72 feet');
+			}else{
+				$scope.errors.push('Your goal elevation must be less than 8000 meters');
+			}
+		}
+		return $scope.errors.length == 0;
+	}
 });
 
 controllers.controller('RouteController', function($scope){
 	$scope.selectRoute = function(route){
 		$scope.goal.route = route;
 		$scope.goal.distance = route.calculatedDistance;
-		$scope.goal.elevationGain = parseFloat(route.elevation_gain.toFixed(2));
+		$scope.goal.elevation = parseFloat(route.elevation_gain.toFixed(2));
 		$scope.modal.hide();
 	}
 });
 
-controllers.controller('CurrentProgramController', function ($scope, $state, $stateParams, $ionicHistory) {
+controllers.controller('CurrentProgramController', function ($scope, $state, $stateParams, $ionicHistory, UserService) {
 	$scope.program = $stateParams.currentProgram;
+	$scope.user = UserService.current();
+	console.log($stateParams.currentProgram);
 });
 
 function getValue(mathval) {

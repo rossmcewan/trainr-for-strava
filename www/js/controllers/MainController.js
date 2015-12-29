@@ -9,7 +9,7 @@ controllers.controller('MainController', function ($scope, $state, $ionicHistory
 		return $state.go('connect');
 	}
 	return ProgramService.getCurrentProgram().then(function (result) {
-		if (result) {
+		if (result && result != true) {
 			console.log('sending to current program');
 			$ionicHistory.clearHistory();
 			$ionicHistory.clearCache();
